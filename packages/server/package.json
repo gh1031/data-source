@@ -2,26 +2,36 @@
   "name": "public-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "start": "nodemon ./bin"
+    "tsc": "tsc",
+    "dev:ts": "nodemon ./bin/index.ts",
+    "dev:js": "npm run tsc && nodemon ./dist/bin"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "koa": "^2.8.1",
+    "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
-    "mongoose": "^5.6.11",
     "mysql": "^2.17.1",
     "strip-ansi": "^5.2.0"
   },
   "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/koa": "^2.11.2",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-logger": "^3.1.1",
+    "@types/koa-router": "^7.4.0",
+    "@types/mysql": "^2.15.9",
+    "@typescript-eslint/eslint-plugin": "^2.24.0",
+    "@typescript-eslint/parser": "^2.24.0",
     "chalk": "^2.4.2",
     "eslint": "^6.2.2",
     "eslint-plugin-node": "^9.1.0",
     "koa-logger": "^3.2.1",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "ts-node": "^8.7.0",
+    "typescript": "^3.8.3"
   }
 }

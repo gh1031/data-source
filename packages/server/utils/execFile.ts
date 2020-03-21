@@ -1,4 +1,4 @@
-const cp = require('child_process');
+import cp from 'child_process';
 
 console.log(process.cwd())
 cp.execFileSync('./mongodb.sh', {
