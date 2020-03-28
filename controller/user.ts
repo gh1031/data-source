@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import { Context } from 'koa';
 import Base from './base';
 import * as db from '../bootstrap/db';
@@ -75,11 +74,15 @@ class User extends Base{
    * @param {Context} ctx 
    * @description 注册模块
    */
-  async register(ctx: Context) {
+  async register(ctx: Context): Promise<unknown> {
     const { query, body } = ctx.request;
     console.log(body)
     const { name, password, avator } = (query || {});
     const isExist = await db.query(isUserExist(name));
+
+    if (!name || !password || !avator) {
+      return ctx.body = this.return({ data: false, errorMsg: '有选项为空' })
+    }
 
     if ((isExist as []).length > 0) {
       return ctx.body = this.return({
@@ -92,7 +95,7 @@ class User extends Base{
       name,
       password,
       avator,
-      gmt_create: Date.now(),
+      gmtCreate: Date.now(),
     })
       .then(
         result => {
@@ -110,11 +113,14 @@ class User extends Base{
    * @param {Object} ctx 
    * @description 登录模块
    */
-  async login(ctx: Context) {
+  async login(ctx: Context): Promise<unknown> {
     const { body, query } = ctx.request;
     console.log(body);
     const { name, password } = (query || {});
-    await db.query(isThisUser, [name, password])
+    if (!name || !password) {
+      return ctx.body = this.return({ data: false, errorMsg: '账号或密码为空' })
+    }
+    return await db.query(isThisUser, [name, password])
       .then(
         (result: []) => {
           if (result.length <= 0) {
