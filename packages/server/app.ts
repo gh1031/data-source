@@ -3,8 +3,10 @@ import fs from 'fs';
 import stripAnsi from 'strip-ansi';
 import logger from 'koa-logger';
 import bodyparser from 'koa-bodyparser';
+import serve from 'koa-static';
 import router from './router/index';
 import { randomColorLog, colorLog } from './utils/chalk';
+import responseTime from './middleware/responseTime';
 import './bootstrap/db';
 
 const app = new Koa();
@@ -33,9 +35,11 @@ app.use(logger({
         }
     })
   }
-}))
+}));
 
-app.use(bodyparser())
-app.use(router)
+app.use(responseTime());
+app.use(serve(__dirname + '/static'));
+app.use(bodyparser());
+app.use(router);
 
 export default app;

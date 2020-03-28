@@ -1,7 +1,6 @@
-// eslint-disable-next-line no-unused-vars
 import { Context } from 'koa';
 import Base from './base';
-import {query} from '../bootstrap/db';
+import { query } from '../bootstrap/db';
 
 class Goods extends Base{
   async list(ctx: Context) {

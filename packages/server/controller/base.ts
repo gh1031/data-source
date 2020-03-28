@@ -1,9 +1,6 @@
-import { ResponseDTO } from "../typings";
+import { ResponseDTO } from '../typings';
 
 class Base {
-  constructor() {
-
-  }
   response(response: ResponseDTO): ResponseDTO {
     return {
       ...response,
@@ -15,7 +12,7 @@ class Base {
     errorMsg = '',
     data = null,
     message = '',
-  }) {
+  }): ResponseDTO {
     return this.response({
       code,
       errorMsg,

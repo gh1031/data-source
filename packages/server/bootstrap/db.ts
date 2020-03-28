@@ -1,9 +1,9 @@
-import mysql from 'mysql';
+import mysql, { Connection } from 'mysql';
 import chalk from 'chalk';
 import config from '../config/db.conf';
-import { user_table } from '../sql/create';
+import { userTable } from '../sql/create';
 
-function initDB() {
+function initDB(): Connection {
   const connection = mysql.createConnection(config);
   connection.connect((err) => {
     if (err) {
@@ -15,7 +15,7 @@ function initDB() {
 }
 
 
-export function query(sql: string, values?: any) {
+export function query(sql: string, values?: unknown): Promise<unknown> {
   return new Promise((resolve, reject) => {
     initDB().query(sql, values, (err, results) => {
       if (err) {
@@ -27,8 +27,8 @@ export function query(sql: string, values?: any) {
 }
 
 
-export function createTable(sql: string) {
+export function createTable(sql: string): Promise<unknown> {
   return query(sql)
 }
 
-createTable(user_table);
+createTable(userTable);
