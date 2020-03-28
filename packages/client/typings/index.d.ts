@@ -1,7 +1,9 @@
 export interface ResponseDTO {
   code: string;
-  data: any;
+  data: unknown;
   message: string;
   errorMsg: string;
   success?: boolean;
 }
+
+declare module "*.html"
