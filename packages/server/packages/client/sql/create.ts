@@ -1,4 +1,4 @@
-export const user_table = `
+export const userTable = `
   CREATE TABLE IF NOT EXISTS users (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL COMMENT '用户名',
