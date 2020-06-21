@@ -1,43 +1,20 @@
 import Koa from 'koa';
-import fs from 'fs';
-import stripAnsi from 'strip-ansi';
-import logger from 'koa-logger';
 import bodyparser from 'koa-bodyparser';
 import serve from 'koa-static';
-import router from './router/index';
-import { randomColorLog, colorLog } from './utils/chalk';
+import views from 'koa-views';
+import router from './router';
 import responseTime from './middleware/responseTime';
-import './bootstrap/db';
+// import './bootstrap/db';
 
 const app = new Koa();
-// const CPU = process.cpuUsage();
-// const MEMO = process.memoryUsage();
 
-
-const logFileName = () => {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = now.getMonth() + 1;
-  const date = now.getDate()
-  return `${year}-${month}-${date}`
-}
-
-app.use(logger({
-  transporter: (str) => {
-    colorLog(stripAnsi(str), 'red')
-    fs.appendFile(
-      `./log/${logFileName()}.txt`,
-      `str: ${stripAnsi(str)}\nargs: \n\n`,
-      error => {
-        randomColorLog(str)
-        if (error) {
-          colorLog('write log error' + error, 'red')
-        }
-    })
-  }
-}));
-
+// 模版引擎
+app.use(views(__dirname + '/views', {
+  extension: 'ejs'
+}))
+// 自定义中间价
 app.use(responseTime());
+// 静态文件
 app.use(serve(__dirname + '/static'));
 app.use(bodyparser());
 app.use(router);
