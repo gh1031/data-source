@@ -15,13 +15,10 @@ class Home extends Base {
     this.lnglat = [];
   }
   public async home(ctx): Promise<void> {
-    console.log(1)
-    await this.fetchJobList();
-    console.log(2)
-    console.log(this.jobLists)
-    this.fetchLngLat(this.jobLists);
+    // await this.fetchJobList();
+    // this.fetchLngLat(this.jobLists);
     await ctx.render('amap', { title: '高德地图' })
-    console.log(3)
+    
   }
   public fetchJobList(): Promise<void> {
     return new Promise((resolve, reject) => {
