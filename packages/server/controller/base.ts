@@ -1,4 +1,4 @@
-import { ResponseDTO } from '../typings';
+import { ResponseDTO } from '../@types/index';
 
 class Base {
   response(response: ResponseDTO): ResponseDTO {
