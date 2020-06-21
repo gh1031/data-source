@@ -1,4 +1,3 @@
-import { Context } from 'koa';
 import Base from './base';
 import * as db from '../bootstrap/db';
 import { insertUser } from '../sql/update';
@@ -74,7 +73,7 @@ class User extends Base{
    * @param {Context} ctx 
    * @description 注册模块
    */
-  async register(ctx: Context): Promise<unknown> {
+  async register(ctx): Promise<unknown> {
     const { query, body } = ctx.request;
     console.log(body)
     const { name, password, avator } = (query || {});
@@ -113,7 +112,7 @@ class User extends Base{
    * @param {Object} ctx 
    * @description 登录模块
    */
-  async login(ctx: Context): Promise<unknown> {
+  async login(ctx): Promise<unknown> {
     const { body, query } = ctx.request;
     console.log(body);
     const { name, password } = (query || {});
@@ -193,4 +192,4 @@ class User extends Base{
   }
 }
 
-export default new User();
+export default User;

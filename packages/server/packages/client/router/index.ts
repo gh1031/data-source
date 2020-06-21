@@ -1,20 +1,15 @@
-import fs from 'fs';
-import path from 'path';
 import Router from 'koa-router';
+import { DefaultState, Context } from 'koa';
 import user from './user';
-import goods from './goods';
-import demand from './demand';
+import amap from './amap';
 
-const router = new Router();
-const indexPage = fs.readFileSync(path.resolve(__dirname, '../static/index.html'), 'utf8');
-
+const router = new Router<DefaultState, Context>();
 router.get('/', async ctx => {
-  ctx.body = indexPage;
+  await ctx.render('index')
 })
 
 router.use('/user', user);
-router.use('/goods', goods);
-router.use('/demand', demand);
+router.use('/amap', amap);
 router.use(router.allowedMethods());
 
 export default router.routes();
