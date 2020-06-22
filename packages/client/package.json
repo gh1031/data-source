@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "tsc": "tsc",
+    "copy": "cp -R ./views ./dist && cp -R ./config/pm2 ./dist/config",
+    "build": "rm -rf dist && tsc",
     "dev:ts": "nodemon ./bin/index.ts",
-    "dev:js": "npm run tsc && nodemon ./dist/bin",
+    "dev:js": "npm run build && npm run copy && nodemon ./dist/bin",
+    "start": "npm run copy && pm2 start ./config/pm2/prod.config.json",
     "eslint:js": "eslint"
   },
   "keywords": [],

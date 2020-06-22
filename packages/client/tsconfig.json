@@ -13,5 +13,4 @@
     "esModuleInterop": true,                  
   },
   "exclude": ["node_modules"],
-  "include": ["@types/*"]
 }

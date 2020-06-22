@@ -6,5 +6,6 @@ export default (): Middleware => {
     await next()
     const ms = Date.now() - start;
     console.log(`response use ${ms}ms`)
+    ctx.set('X-Response-Time', `${ms}`);
   }
 }
