@@ -10,6 +10,9 @@ router.get('/', async ctx => {
 
 router.use('/user', user);
 router.use('/amap', amap);
+router.get('*', async ctx => {
+  await ctx.render('404')
+})
 router.use(router.allowedMethods());
 
 export default router.routes();
