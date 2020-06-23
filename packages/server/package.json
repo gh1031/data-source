@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "copy": "cp -R ./views ./dist && cp -R ./config/pm2 ./dist/config",
-    "build": "rm -rf dist && tsc",
+    "copy": "./copy.sh",
+    "build": "rm -rf dist && tsc && npm run copy",
     "dev:ts": "nodemon ./bin/index.ts",
     "dev:js": "npm run build && npm run copy && nodemon ./dist/bin",
-    "start": "npm run copy && pm2 start ./config/pm2/prod.config.json",
+    "start": "pm2 start ./config/pm2/prod.config.json",
     "eslint:js": "eslint"
   },
   "keywords": [],
