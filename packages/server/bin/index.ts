@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env 
 
 import app from '../app';
 import ServerConf from '../config/server.conf';

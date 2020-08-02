@@ -1,84 +1,52 @@
+import path from 'path';
+import fs from 'fs';
+import formidable from 'formidable';
 import Base from './base';
-import * as db from '../bootstrap/db';
-import { insertUser } from '../sql/update';
-import { isUserExist, isThisUser } from '../sql/query';
+import * as db from '../bootstrap/mysql';
+import { insertUser } from '../sqls/update';
+import { isUserExist, isThisUser } from '../sqls/query';
+import { Context } from 'koa';
 
-// const component = {
-//   wrapped_menu: '/components/wrapped_menu',
-//   remote_select: '/components/remote_select',
-//   operation_confirm: '/components/operation_confirm',
-//   wrapped_upload: '/components/wrapped_upload',
-//   wrapped_form: '/components/wrapped_form',
-// };
-
-// const menus = [
-//   {
-//     title: 'setting',
-//     path: '/setting',
-//     icon: 'setting',
-//     children: [
-//       {
-//         title: 'menu',
-//         icon: 'menu',
-//         path: '/setting/menu'
-//       }
-//     ]
-//   },
-//   {
-//     title: 'windows',
-//     path: '/windows',
-//     icon: 'windows',
-//   },
-//   {
-//     title: 'taobao',
-//     path: '/taobeo',
-//     icon: 'taobao',
-//   },
-//   {
-//     title: 'components',
-//     icon: 'alipay',
-//     children: [
-//       {
-//         title: 'WrappedMenu',
-//         path: component.wrapped_menu,
-//         icon: 'menu',
-//       },
-//       {
-//         title: 'RemoteSelect',
-//         path: component.remote_select,
-//         icon: 'select',
-//       },
-//       {
-//         title: 'WrappedUpload',
-//         path: component.wrapped_upload,
-//         icon: 'upload',
-//       },
-//       {
-//         title: 'OperationConfirm',
-//         path: component.operation_confirm,
-//         icon: 'question',
-//       },
-//       {
-//         title: 'WrappedForm',
-//         path: component.wrapped_form,
-//         icon: 'form',
-//       },
-//     ],
-//   },
-// ]
-
+const ONE_DAY = 24 * 60 * 60 * 1000;
 class User extends Base{
   /**
    * 
    * @param {Context} ctx 
    * @description 注册模块
    */
-  async register(ctx): Promise<unknown> {
-    const { query, body } = ctx.request;
-    console.log(body)
-    const { name, password, avator } = (query || {});
+  async registry(ctx): Promise<unknown> {
+    // const { query, body } = ctx.request;
+    const form = formidable({
+      multiples: true,
+      uploadDir: path.resolve(__dirname, '../static/uploads'),
+      keepExtensions: true,
+    });
+    function getFormData(): Promise<unknown> {
+      return new Promise((resolve, reject) => {
+        form.parse(ctx.req, async function (err, fields, files) {
+          if (err) {
+            return ctx.body = err;
+          }
+          ctx.request.body = fields;
+          ctx.request.files = files;
+          fs.rename(
+            files.file.path,
+            path.resolve(__dirname, '../static/uploads', files.file.name), function (err) {
+            if (err) {
+              console.log('rename error!');
+              reject('rename error!')
+            }
+            console.log('rename success');
+            resolve();
+          })
+        })
+      })
+    }
+    await getFormData().catch(err => console.log(err));
+    const { username: name, password } = ctx.request.body;
+    const { path: avator } = ctx.request.files.file;
+    console.log(name, password, avator)
     const isExist = await db.query(isUserExist(name));
-
     if (!name || !password || !avator) {
       return ctx.body = this.return({ data: false, errorMsg: '有选项为空' })
     }
@@ -94,9 +62,8 @@ class User extends Base{
       name,
       password,
       avator,
-      gmtCreate: Date.now(),
-    })
-      .then(
+      gmt_create: Date.now(),
+    }).then(
         result => {
           console.log(result);
           ctx.body = this.return({ data: true, message: '注册成功！' })
@@ -112,84 +79,31 @@ class User extends Base{
    * @param {Object} ctx 
    * @description 登录模块
    */
-  async login(ctx): Promise<unknown> {
-    const { body, query } = ctx.request;
-    console.log(body);
-    const { name, password } = (query || {});
-    if (!name || !password) {
+  async login(ctx: Context): Promise<unknown> {
+    const { body } = ctx.request;
+    const { username, password } = (body || {});
+    if (!username || !password) {
       return ctx.body = this.return({ data: false, errorMsg: '账号或密码为空' })
     }
-    return await db.query(isThisUser, [name, password])
+    return await db.query(isThisUser, [username, password])
       .then(
-        (result: []) => {
+        async (result: object[]) => {
           if (result.length <= 0) {
             return ctx.body = this.return({ data: null, message: '账号或密码不正确，请重试！'})
           }
-          ctx.body = this.return({ data: true, message: '登录成功！' })
+          // 设置cookie
+          ctx.cookies.set('__token__', username, {
+            maxAge: ONE_DAY,
+            path: '/',
+            httpOnly: true,
+          })
+          ctx.body = this.return({ data: result[0], message: '登录成功！' })
         }, 
         err => {
           ctx.body = this.return({ errorMsg: err })
         }
       )
   }
-
-  /**
-   * 
-   * @param {Object} ctx 
-   * @description 获取菜单模块
-   */
-  // eslint-disable-next-line no-unused-vars
-  async menus(_) {
-    // const { body } = ctx.request;
-    // await MenusModel.find(body, (err, docs) => {
-    //   if(err) throw Error(`find menus error: ${err}`)
-    //   ctx.body = this.returnData(0, '', {
-    //     list: docs,
-    //     total: null,
-    //     pageNum: 1,
-    //     pageSize: 20,
-    //   })
-    // })
-  }
-
-  /**
-   * 
-   * @param {Object} ctx 
-   * @description 更新菜单模块
-   */
-  // eslint-disable-next-line no-unused-vars
-  async updateMenus(_) {
-    // const { body } = ctx.request;
-    // if (body) {
-    //   let children = null;
-    //   const { pid, title, path, icon, subTitle, subPath, subIcon } = body
-    //   if (pid) {
-    //     await MenusModel.findByIdAndUpdate(pid, {
-    //       $push: { children: {
-    //         icon: subIcon,
-    //         title: subTitle,
-    //         path: subPath
-    //       }}
-    //     })
-    //     ctx.body = this.returnData(0)
-    //   }
-    //   if (!pid) {
-    //     children = [{ path: subPath, icon: subIcon, title: subTitle }]
-    //     const menus = new MenusModel({
-    //       title,
-    //       path,
-    //       icon,
-    //       children,
-    //     })
-    //     await menus.save((err) => {
-    //       if (err) {
-    //         throw Error('save menu failed: ', err)
-    //       }
-    //     })
-    //     ctx.body = this.returnData(0, '')
-    //   }
-    // }
-  }
 }
 
-export default User;
+export default new User();

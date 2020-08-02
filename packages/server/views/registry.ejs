@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录</title>
+  <style>
+    .login {
+      display: flex;
+    }
+    .login form {
+      margin: auto;
+    }
+    .login form div {
+      margin: 10px 0;
+    }
+    .login form div label {
+      display: inline-block;
+      width: 80px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login">
+    <form id="form">
+      <div>
+        <label for="username">用户名：</label>
+        <input type="text" id="username">
+      </div>
+      <div>
+        <label for="password">密码：</label>
+        <input type="password" id="password">
+      </div>
+      <div>
+        <label for="avatar">头像：</label>
+        <input type="file" id="avatar">
+      </div>
+      <input type="submit" value="提交">
+    </form>
+  </div>
+  <script>
+    const $ = selector => document.querySelector(selector);
+    const form = $('#form');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const body = new FormData();
+      body.append('username', $('#username').value);
+      body.append('password', $('#password').value);
+      body.append('file', $('#avatar').files[0]);
+      fetch('/user/register', { 
+        method: 'post',
+        body
+       });
+    })
+  </script>
+</body>
+</html>

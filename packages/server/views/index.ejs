@@ -16,6 +16,11 @@
   </style>
 </head>
 <body>
-  <h1>欢迎使用浩锅的服务🐶</h1>
+  <h1>欢迎<span id="user"></span>使用浩锅的服务🐶</h1>
+  <script>
+    const $ = el => document.querySelector(el);
+    const userInfo = localStorage.getItem('userInfo');
+    $('#user').innerHTML = JSON.parse(userInfo).name;
+  </script>
 </body>
 </html>

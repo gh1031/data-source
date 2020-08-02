@@ -10,7 +10,6 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "esModuleInterop": true,                  
+    "esModuleInterop": true,
   },
-  "exclude": ["node_modules"],
 }
