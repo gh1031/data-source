@@ -4,7 +4,8 @@ import serve from 'koa-static';
 import views from 'koa-views';
 import router from './router';
 import responseTime from './middleware/responseTime';
-// import './bootstrap/db';
+import checkLogin from './middleware/checkLogin';
+import './bootstrap/mysql';
 
 const app = new Koa();
 
@@ -17,6 +18,8 @@ app.use(serve(__dirname + '/static'));
 app.use(bodyparser());
 // 自定义中间价
 app.use(responseTime());
+app.use(checkLogin);
+// 路由
 app.use(router);
 
 export default app;
