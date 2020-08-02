@@ -7,16 +7,17 @@ class Base {
       success: response.code === '0',
     }
   }
+  
   return({
     code = '0',
-    errorMsg = '',
     data = null,
+    errorMsg = '',
     message = '',
   }): ResponseDTO {
     return this.response({
       code,
-      errorMsg,
       data,
+      errorMsg,
       message,
     })
   }
