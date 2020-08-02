@@ -23,6 +23,5 @@ export const randomColorLog = (s?) => {
   // } catch(e) {
   //   chalk.red(e)
   // }
-
 }
 
