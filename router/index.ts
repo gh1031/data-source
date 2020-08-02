@@ -1,20 +1,30 @@
-import fs from 'fs';
-import path from 'path';
 import Router from 'koa-router';
-import user from './user';
-import goods from './goods';
-import demand from './demand';
+import { DefaultState, Context } from 'koa';
+import userRoute from './user';
+import amapRoute from './amap';
+import spiderRoute from './spider';
+import userControll from '../controller/user';
 
-const router = new Router();
-const indexPage = fs.readFileSync(path.resolve(__dirname, '../static/index.html'), 'utf8');
-
+const router = new Router<DefaultState, Context>();
 router.get('/', async ctx => {
-  ctx.body = indexPage;
+  await ctx.render('index')
+});
+// 登录
+router.get('/login', async ctx => {
+  await ctx.render('login');
+});
+// 注册
+router.get('/registry', async ctx => {
+  await ctx.render('registry');
 })
 
-router.use('/user', user);
-router.use('/goods', goods);
-router.use('/demand', demand);
+router.use('/user', userRoute);
+router.use('/amap', amapRoute);
+router.use('/spider', spiderRoute);
+// route not match
+router.get('*', async ctx => {
+  await ctx.render('404')
+})
 router.use(router.allowedMethods());
 
 export default router.routes();

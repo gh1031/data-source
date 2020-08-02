@@ -1,17 +1,10 @@
 import Router from 'koa-router';
-import user from '../controller/user';
+import { DefaultState, Context } from 'koa';
+import userControll from '../controller/user';
 
-const router = new Router();
+const router = new Router<DefaultState, Context>();
 router
-  .get('/', async ctx => {
-    ctx.body = 'welcome user page'
-  })
-
-router
-  .get('/register', ctx => user.register(ctx))
-  .get('/login', ctx => user.login(ctx))
-  .get('/menus', ctx => user.menus(ctx))
-  .post('/menus', ctx => user.menus(ctx))
-  .post('/menus/update', ctx => user.updateMenus(ctx))
+  .post('/registry', ctx => userControll.registry(ctx))
+  .post('/login', ctx => userControll.login(ctx))
 
 export default router.routes()

@@ -8,10 +8,8 @@
     "strict": false,                           
     "baseUrl": "./",                       
     "paths": {
-      // "@/*": ["./*"]
+      "@/*": ["./*"]
     },
-    "typeRoots": ["./node_modules/@types", "./typings"],
-    "esModuleInterop": true,                  
+    "esModuleInterop": true,
   },
-  "exclude": ["node_modules"]
 }
