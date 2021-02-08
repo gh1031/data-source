@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2017", "DOM"],
+    "target": "ES6",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "src": ["./src/*"],
+    },
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src/*"]
+}
