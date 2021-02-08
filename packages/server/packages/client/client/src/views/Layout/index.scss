@@ -1,0 +1,49 @@
+// ui style
+.page-layout {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.page-layout-has-sider {
+  flex-direction: row;
+}
+
+.page-layout-header {
+  height: 64px;
+  line-height: 64px;
+  padding: 0 24px;
+}
+
+.page-layout-content {
+  height: 100%;
+
+}
+
+.page-layout-asider {
+
+}
+
+$box-shadow: 0 0 10px #ccc;
+
+// custom style
+.app {
+  height: 100%;
+
+   header {
+    height: 56px;
+    line-height: 56px;
+    text-align: center;
+    box-shadow: $box-shadow;
+  } 
+  
+  aside {
+    min-width: 200px;
+    box-shadow: $box-shadow;
+  }
+
+  main {
+    flex: auto;
+  }
+}
