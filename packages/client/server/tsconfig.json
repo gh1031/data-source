@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "CommonJS",
+    "lib": ["ESNext"],
+    "outDir": "./dist",
+    "baseUrl": "./",      
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "strict": true,
+    "declaration": false,
+
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    "watch": true,
+    "incremental": true,
+
+    "noImplicitAny": false,
+  },
+  "exclude": ["node_modules"]
+}
