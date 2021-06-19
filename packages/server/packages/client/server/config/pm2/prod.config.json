@@ -1,8 +1,0 @@
-{
-  "name": "node-service",
-  "script": "./dist/bin/index.js",
-  "port": 8080,
-  "env": {
-    "NODE_ENV": "production"
-  }
-}

@@ -1,7 +1,42 @@
 {
-  "name": "root",
-  "private": true,
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/bin/index.js",
+  "scripts": {
+    "copy": "copy.sh",
+    "watch": "tsc -p . -w --incremental",
+    "dev": "ts-node bin/index.ts",
+    "dev:inspect": "node -r ts-node/register --inspect-brk bin/index.ts",
+    "start": "pm2 start config/pm2/prod.config.json",
+    "eslint:js": "eslint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@koa/router": "^10.0.0",
+    "axios": "^0.21.1",
+    "cheerio": "^1.0.0-rc.3",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-static": "^5.0.0",
+    "koa-views": "^6.2.1",
+    "mysql": "^2.17.1",
+    "superagent": "^5.2.2",
+    "ws": "^7.4.4"
+  },
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "@types/cheerio": "^0.22.17",
+    "@types/koa": "^2.11.2",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-logger": "^3.1.1",
+    "@types/koa-static": "^4.0.1",
+    "@types/koa-views": "^2.0.4",
+    "@types/koa__router": "^8.0.3",
+    "@types/mysql": "^2.15.9",
+    "@types/superagent": "^4.1.10",
+    "koa-logger": "^3.2.1",
+    "ts-node": "^8.7.0"
   }
 }

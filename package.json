@@ -1,7 +1,17 @@
 {
-  "name": "root",
+  "name": "node-service-mon",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
+    "chalk": "^4.1.1",
+    "eslint": "^7.29.0",
+    "typescript": "^4.3.4"
+  },
+  "gitHooks": {
+    "commit-msg": "node scripts/verifyCommit.js"
   }
 }
