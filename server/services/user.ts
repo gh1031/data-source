@@ -1,4 +1,4 @@
-import checkLogin from '@/middleware/checkLogin';
+import checkLogin from '@/middlewares/checkLogin';
 import userModel from '../models/user';
 
 export default {
