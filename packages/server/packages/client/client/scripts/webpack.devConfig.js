@@ -9,7 +9,7 @@ module.exports = {
     proxy: {
       '/service/': {
         target: 'http://localhost:1032/'
-      }
+      },
     }
   },
 }

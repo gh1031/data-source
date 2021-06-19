@@ -5,7 +5,7 @@ import bodyparser from 'koa-bodyparser';
 import router from './router';
 // import responseTime from './middleware/responseTime';
 // import checkLogin from './middleware/checkLogin';
-// import testMiddlewareControlFlow from './test/middleware';
+import middlewareExecOrder from './middlewares/execOrder';
 
 const app = new Koa();
 
