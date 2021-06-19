@@ -5,7 +5,6 @@ module.exports = {
     ["@babel/preset-typescript"],
   ],
   plugins: [
-    "@babel/plugin-transform-runtime",
     // TODO
     // "react-refresh/babel"
     'react-hot-loader/babel',
